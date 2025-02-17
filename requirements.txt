@@ -1,0 +1,4 @@
+duckduckgo_search
+fastcore
+fastai
+fastdownload
