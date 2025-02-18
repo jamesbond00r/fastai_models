@@ -62,21 +62,21 @@ ResizeToTHumb(dest, thumbnail)
 
 searches = 'corgi','fox'
 path = Path('corgi_or_not')
-# for index, o in enumerate(searches):
-#     dest = (path/o)
-#     dest.mkdir(exist_ok=True, parents=True)
-#     urls=search_images(f'{o} photo', 30)
-#     for url in urls:
-#         try:
-#             download_url( url, dest, show_progress=False)
-#             print(url)
-#             time.sleep(5)
-#             base = os.path.basename(url)
-#             file = str(dest) + "/" + str(base)
-#             ResizeToTHumb(file, thumbnail)
-#         except Exception as e:
-#             print(f"Failed to download {url}. Error: {e}")
-#             continue  # Skip to the next URL if download fails
+for index, o in enumerate(searches):
+    dest = (path/o)
+    dest.mkdir(exist_ok=True, parents=True)
+    urls=search_images(f'{o} photo', 30)
+    for url in urls:
+        try:
+            download_url( url, dest, show_progress=False)
+            print(url)
+            time.sleep(5)
+            base = os.path.basename(url)
+            file = str(dest) + "/" + str(base)
+            ResizeToTHumb(file, thumbnail)
+        except Exception as e:
+            print(f"Failed to download {url}. Error: {e}")
+            continue  # Skip to the next URL if download fails
 
 
 failed = verify_images(get_image_files(path))
@@ -92,13 +92,13 @@ dls = DataBlock(
     item_tfms=[Resize(192, ResizeMethod.Squish)]  # Corrected Syntax
 ).dataloaders(path, bs=32)
 
-# for batch in dls.train:
-#     print("Train Batch:", batch)
-#     break  # Stop after one batch
+for batch in dls.train:
+    print("Train Batch:", batch)
+    break  # Stop after one batch
 
-# for batch in dls.valid:
-#     print("Valid Batch:", batch)
-#     break  # Stop after one batch
+for batch in dls.valid:
+    print("Valid Batch:", batch)
+    break  # Stop after one batch
 
 learn = vision_learner(dls, resnet18, metrics=error_rate)
 learn.fine_tune(3)
